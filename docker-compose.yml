@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-server-80
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mini-fb_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    restart: always
+    ports:
+      - "3306:3306"
+
+  webserver:
+    container_name: webserver
+    build:
+      context: ./
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+    ports:
+        - "80:80"
+    volumes:
+        - ./src:/var/www/html
+    links:
+      - "mysql:database"
