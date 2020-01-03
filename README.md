@@ -10,6 +10,7 @@
 - [x] Otros dos PHPs para redactar mensajes: nuevo-mensaje-formulario.php y nuevo-mensaje-guardar.php
 
 Opcionales:
+- [x] **Registro de nuevos usuarios con validacion previa de alias y de correo electronico con AJAX**
 - [x] Mensajes destacados: al crearlos se puede elegir (checkbox) si se quiere que sea destacado. Los destacados se ven en negrita.
 - [x] Mensajes pinchados: al crearlos se puede elegir (checkbox) si se quiere que sea pinchado. Los pinchados salen todos juntos al inicio, y, tras ellos, ya el resto de mensajes no pinchados.
 - [x] Dos iconos para los usuarios: los usuarios con menos de 3 mensajes (novato) y el resto (veterano). OJO, no implica nuevo campo en la BD: es un COUNT. En el muro de mensajes, junto al usuario que publica cada mensaje saldrá un icono para los newbies y otro distinto para los veteranos.
