@@ -11,6 +11,8 @@ class UserDAO
     private $getWithAlias = "SELECT * FROM T_USUARIOS WHERE ALIAS_USUARIO=?";
     private $getWithIdentifier = "SELECT * FROM T_USUARIOS WHERE CODIGO_COOKIE=?";
     private $changeIdentifier = "UPDATE T_USUARIOS SET CODIGO_COOKIE=? WHERE ID_USUARIO=?";
+    private $getEmail= "SELECT EMAIL FROM T_USUARIOS WHERE EMAIL=?;";
+    private $getAlias= "SELECT ALIAS_USUARIO FROM T_USUARIOS WHERE ALIAS_USUARIO=?";
 
     private $pdo;
 
@@ -89,5 +91,21 @@ class UserDAO
 
     public function changeUserIdentifier($id, $codCookie){
         $this->pdo->prepare($this->changeIdentifier)->execute([$codCookie, $id]);
+    }
+
+    public function checkUserEmail($email)
+    {
+        $select = $this->pdo->prepare($this->getEmail);
+        $select->execute([$email]);
+        $rs = $select->fetch();
+        return $rs;
+    }
+
+    public function checkAlias($alias)
+    {
+        $select = $this->pdo->prepare($this->getAlias);
+        $select->execute([$alias]);
+        $rs = $select->fetch();
+        return $rs;
     }
 }

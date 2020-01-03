@@ -6,13 +6,21 @@ require_once 'Database/UserDAO.php';
 
 class UserController
 {
+
+    private $userDAO;
+
+    public function __construct()
+    {
+        $this->userDAO = new UserDAO();
+    }
+
+
     public function checkUser($credentials)
     {
-        $udao = new UserDAO();
-        $result = $udao->getWithAlias($credentials['alias']);
+        $result = $this->userDAO->getWithAlias($credentials['alias']);
         if (!empty($result)){
             $id = $result['ID_USUARIO'];
-            $user = $udao->getUser($id);
+            $user = $this->userDAO->getUser($id);
             if ($credentials['password'] == $user->getPassword()){
                 return $id;
             }
@@ -22,8 +30,7 @@ class UserController
 
     public function checkIdentifier($identifier)
     {
-        $udao = new UserDAO();
-        $result = $udao->getWithIdentifier($identifier);
+        $result = $this->userDAO->getWithIdentifier($identifier);
         if (!empty($result)){
             $id = $result['ID_USUARIO'];
             return $id;
@@ -33,24 +40,21 @@ class UserController
 
     public function getUser($id)
     {
-        $udao = new UserDAO();
-        $user = $udao->getUser($id);
+        $user = $this->userDAO->getUser($id);
         return $user;
     }
 
     public function createIdentifier($id)
     {
         $valor = date("YmdHi") . $id;
-        $udao = new UserDAO();
         $codCookie = hash('sha1', $valor);
-        $udao->changeUserIdentifier($id, $codCookie);
+        $this->userDAO->changeUserIdentifier($id, $codCookie);
         return $codCookie;
     }
 
     public function getAll()
     {
-        $udao = new UserDAO();
-        return $udao->getAll();
+        return $this->userDAO->getAll();
     }
 
     public function registraNuevoUsuario(array $prop)
@@ -64,20 +68,27 @@ class UserController
             $prop['email'],
             UserType::USER
         );
-        $udao = new UserDAO();
-        $udao->insert($user);
+        $this->userDAO->insert($user);
         return;
     }
 
+    public function checkEmail($email)
+    {
+        $response = $this->userDAO->checkUserEmail($email);
+        if ($response == null){
+            return false;
+        }
+        return true;
+    }
 
-
-
-
-
-
-
-
-
+    public function checkAlias($alias)
+    {
+        $response = $this->userDAO->checkAlias($alias);
+        if ($response == null){
+            return false;
+        }
+        return true;
+    }
 
 
 }
