@@ -33,5 +33,6 @@ docker-compose up -d
 ![screenshot](https://raw.github.com/jvegaf/MiniFB/master/screenshots/screenshot1.png)
 ![screenshot](https://raw.github.com/jvegaf/MiniFB/master/screenshots/screenshot2.png)
 ![screenshot](https://raw.github.com/jvegaf/MiniFB/master/screenshots/screenshot3.png)
+![screenshot](https://raw.github.com/jvegaf/MiniFB/master/screenshots/screenshot4.png)
 
 
