@@ -28,14 +28,21 @@ if (isset($_REQUEST['error'])) {
     <!--Bootstrap End-->
     <script>
         $(document).ready(function () {
+
+            let envBtn = $('#enviarBtn');
+
             $('#inputPassword, #inputConfirmPassword').on('keyup', function () {
-                if ($('#inputPassword').val() === $('#inputConfirmPassword').val()) {
-                    $('#message').html('Coinciden').css('color', 'green');
-                    $('#enviarBtn').removeClass('disabled');
-                } else {
-                    $('#message').html('No coinciden').css('color', 'red');
-                    let dis = $('#enviarBtn').hasClass('disabled');
-                if (!dis) $('#enviarBtn').addClass('disabled');
+                let passwd = $(this).val().trim();
+                if (passwd !== ''){
+                    if ($('#inputPassword').val() === $('#inputConfirmPassword').val()) {
+                        $ ('#message').html("Coinciden").css('color', 'green');
+                        envBtn.removeClass('disabled');
+                    } else {
+                        $('#message').html("No coinciden").css('color', 'red');
+                        if (!envBtn.hasClass('disabled')) envBtn.addClass('disabled');
+                    }
+                }else{
+                    $('#message').html("");
                 }
             });
 
@@ -65,12 +72,11 @@ if (isset($_REQUEST['error'])) {
                         type: 'post',
                         data: {'email': userEmail}
                     }).done(function (response) {
-                        let dis = $('#enviarBtn').hasClass('disabled');
                         if (response === "1") { // email registered
-                                if (!dis) $('#enviarBtn').addClass('disabled');
+                                if (!envBtn.hasClass('disabled')) envBtn.addClass('disabled');
                                 $('#email_response').html("<span style='color: red;'>Correo ya registrado previamente</span>");
                             }else{
-                                if (dis) $('#enviarBtn').removeClass('disabled');
+                                if (envBtn.hasClass('disabled')) envBtn.removeClass('disabled');
                                 $("#email_response").html("");
                             }
                         }
@@ -139,7 +145,7 @@ if (isset($_REQUEST['error'])) {
         </div>
         <div class="form-row">
             <div class="form-group col-md-12 d-flex justify-content-around">
-                <button type="submit" id="enviarBtn" class="btn btn-primary">Registrar</button>
+                <button type="submit" id="enviarBtn" class="btn btn-primary disabled">Registrar</button>
                 <a href="index.php" class="btn btn-primary">Cancelar</a>
             </div>
         </div>
